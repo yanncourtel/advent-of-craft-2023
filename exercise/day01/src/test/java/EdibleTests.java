@@ -13,10 +13,10 @@ import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EdibleTests {
-    private static final LocalDate expirationDate = of(2023, 12, 1);
+    private static final LocalDate today = LocalDate.now();
+    private static final LocalDate notFreshDate = today.plusDays(7);
+    private static final LocalDate freshDate = today.minusDays(7);
     private static final UUID inspector = randomUUID();
-    private static final LocalDate notFreshDate = expirationDate.plusDays(7);
-    private static final LocalDate freshDate = expirationDate.minusDays(7);
 
     public static Stream<Arguments> notEdibleFood() {
         return Stream.of(
@@ -32,7 +32,7 @@ class EdibleTests {
     @MethodSource("notEdibleFood")
     void not_edible_if_not_fresh(boolean approvedForConsumption, UUID inspectorId, LocalDate now) {
         var food = new Food(
-                expirationDate,
+                today,
                 approvedForConsumption,
                 inspectorId);
 
@@ -42,7 +42,7 @@ class EdibleTests {
     @Test
     void edible_food() {
         var food = new Food(
-                expirationDate,
+                today,
                 true,
                 inspector);
 
