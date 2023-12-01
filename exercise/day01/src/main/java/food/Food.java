@@ -17,7 +17,7 @@ public record Food(LocalDate expirationDate,
         return this.expirationDate.isAfter(now);
     }
 
-    private Boolean hasBeenApproved() {
+    private boolean hasBeenApproved() {
         return this.approvedForConsumption;
     }
 
