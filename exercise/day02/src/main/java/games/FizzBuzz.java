@@ -1,11 +1,15 @@
 package games;
 
 public class FizzBuzz {
+
+    public static final int MIN_RANGE = 0;
+    public static final int MAX_RANGE = 100;
+
     private FizzBuzz() {
     }
     
     public static String convert(Integer input) throws OutOfRangeException {
-        if (input <= 0 || input > 100) {
+        if (isInputInRange(input)) {
             throw new OutOfRangeException();
         }
 
@@ -22,5 +26,9 @@ public class FizzBuzz {
         }
 
         return input.toString();
+    }
+
+    private static boolean isInputInRange(Integer input) {
+        return input <= MIN_RANGE || input > MAX_RANGE;
     }
 }
