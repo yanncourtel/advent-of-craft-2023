@@ -14,23 +14,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class EdibleTests {
     private static final LocalDate today = LocalDate.now();
-    private static final LocalDate notFreshDate = today.plusDays(7);
+    private static final LocalDate passedDate = today.plusDays(7);
     private static final LocalDate freshDate = today.minusDays(7);
     private static final UUID inspector = randomUUID();
 
     public static Stream<Arguments> notEdibleFood() {
         return Stream.of(
-                Arguments.of(true, inspector, notFreshDate),
+                Arguments.of(true, inspector, passedDate),
                 Arguments.of(false, inspector, freshDate),
                 Arguments.of(true, null, freshDate),
-                Arguments.of(false, null, notFreshDate),
+                Arguments.of(false, null, passedDate),
                 Arguments.of(false, null, freshDate)
         );
     }
 
     @ParameterizedTest
     @MethodSource("notEdibleFood")
-    void not_edible_if_not_fresh(boolean approvedForConsumption, UUID inspectorId, LocalDate now) {
+    void food_should_not_edible_if_not_fresh(boolean approvedForConsumption, UUID inspectorId, LocalDate now) {
         var food = new Food(
                 today,
                 approvedForConsumption,
@@ -40,7 +40,7 @@ class EdibleTests {
     }
 
     @Test
-    void edible_food() {
+    void food_should_be_edible() {
         var food = new Food(
                 today,
                 true,
