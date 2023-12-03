@@ -56,7 +56,8 @@ class PopulationTests {
                     .comparingInt(PopulationTests::getYoungestPetAgeForPerson))
                 .orElse(null);
 
-        assertThat(personWithYoungestPet).isEqualTo(personWithAPetThatWasJustBorn);
+        assertThat(personWithYoungestPet)
+                .isEqualTo(personWithAPetThatWasJustBorn);
     }
 
     private static int getYoungestPetAgeForPerson(Person person) {
