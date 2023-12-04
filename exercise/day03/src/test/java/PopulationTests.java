@@ -11,11 +11,27 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PopulationTests {
-    private static List<Person> population;
 
-    @BeforeAll
-    static void setup() {
-        population = new ArrayList<>();
+    @Test
+    void whoOwnsTheYoungestPet() {
+        var personWithAPetThatWasJustBorn =
+                new Person("Glenn", "Quagmire")
+                        .addPet(PetType.HAMSTER, "Toto", 0);
+
+        var populationUnderTest = myExistingPopulation();
+        populationUnderTest.add(personWithAPetThatWasJustBorn);
+
+        var personWithYoungestPet = populationUnderTest.stream()
+                .min(Comparator
+                    .comparingInt(PopulationTests::getYoungestPetAgeForPerson))
+                .orElse(null);
+
+        assertThat(personWithYoungestPet)
+                .isEqualTo(personWithAPetThatWasJustBorn);
+    }
+
+    private static ArrayList<Person> myExistingPopulation() {
+        var population = new ArrayList<Person>();
 
         population.add(new Person("Peter", "Griffin")
                 .addPet(PetType.CAT, "Tabby", 2));
@@ -41,23 +57,8 @@ class PopulationTests {
                 .addPet(PetType.HAMSTER, "Wuzzy", 2));
 
         population.add(new Person("Glenn", "Quagmire"));
-    }
 
-    @Test
-    void whoOwnsTheYoungestPet() {
-        var personWithAPetThatWasJustBorn =
-                new Person("Glenn", "Quagmire")
-                        .addPet(PetType.HAMSTER, "Toto", 0);
-
-        population.add(personWithAPetThatWasJustBorn);
-
-        var personWithYoungestPet = population.stream()
-                .min(Comparator
-                    .comparingInt(PopulationTests::getYoungestPetAgeForPerson))
-                .orElse(null);
-
-        assertThat(personWithYoungestPet)
-                .isEqualTo(personWithAPetThatWasJustBorn);
+        return population;
     }
 
     private static int getYoungestPetAgeForPerson(Person person) {
