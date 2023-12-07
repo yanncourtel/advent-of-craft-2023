@@ -6,6 +6,7 @@ import people.PetType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.lang.System.lineSeparator;
@@ -42,7 +43,7 @@ class PopulationTests {
     void peopleWithTheirPets() {
         final var response = formatPopulation();
 
-        assertThat(response.toString())
+        assertThat(response)
                 .hasToString("Peter Griffin who owns : Tabby " + lineSeparator() +
                         "Stewie Griffin who owns : Dolly Brian " + lineSeparator() +
                         "Joe Swanson who owns : Spike " + lineSeparator() +
@@ -53,25 +54,27 @@ class PopulationTests {
                         "Glenn Quagmire");
     }
 
-    private static StringBuilder formatPopulation() {
-        final var response = new StringBuilder();
+    private static String formatPopulation() {
+        return population.stream()
+                .map(PopulationTests::formatPerson)
+                .collect(Collectors.joining(lineSeparator()));
+    }
 
-        for (var person : population) {
-            response.append(format("%s %s", person.firstName(), person.lastName()));
+    private static String formatPerson(Person person) {
+        return person.firstName() + " "
+                + person.lastName()
+                + formatPetsFor(person);
+    }
 
-            if (!person.pets().isEmpty()) {
-                response.append(" who owns : ");
-            }
-
-            for (var pet : person.pets()) {
-                response.append(pet.name()).append(" ");
-            }
-
-            if (!population.getLast().equals(person)) {
-                response.append(lineSeparator());
-            }
-        }
-        return response;
+    private static String formatPetsFor(Person person) {
+        return person.pets()
+                .isEmpty()
+                    ? ""
+                    : " who owns : "
+                        + person.pets()
+                            .stream()
+                            .map(Pet::name)
+                            .collect(Collectors.joining(" ")) + " ";
     }
 
     @Test
