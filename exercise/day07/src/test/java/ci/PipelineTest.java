@@ -16,12 +16,13 @@ class PipelineTest {
     private final Config config = mock(Config.class);
     private final CapturingLogger log = new CapturingLogger();
     private final Emailer emailer = mock(Emailer.class);
+    private final EmailSender emailSender = new EmailSender(log, config, emailer);
 
     private Pipeline pipeline;
 
     @BeforeEach
     void setUp() {
-        pipeline = new Pipeline(config, emailer, log);
+        pipeline = new Pipeline(emailSender, log);
     }
 
     @Test

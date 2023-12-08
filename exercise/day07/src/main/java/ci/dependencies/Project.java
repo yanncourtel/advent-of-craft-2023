@@ -17,12 +17,21 @@ public class Project {
         return testStatus != TestStatus.NO_TESTS;
     }
 
-    public String runTests() {
-        return testStatus == TestStatus.PASSING_TESTS ? "success" : "failure";
+    public TaskResult runTests() {
+        var testPassed = testStatus == TestStatus.PASSING_TESTS;
+        return new TaskResult(
+                testStatus == TestStatus.NO_TESTS || testPassed,
+                testStatus == TestStatus.NO_TESTS
+                        ? "No tests"
+                        : testPassed
+                            ? "Tests passed" : "Tests failed"
+                );
     }
 
-    public String deploy() {
-        return buildsSuccessfully ? "success" : "failure";
+    public TaskResult deploy() {
+        return new TaskResult(
+                buildsSuccessfully,
+                buildsSuccessfully ? "Deployment successful" : "Deployment failed");
     }
 
     public static class ProjectBuilder {
