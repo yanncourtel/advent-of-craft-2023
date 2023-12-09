@@ -2,7 +2,11 @@ package password;
 
 public class ContainsAtLeastOneAllowedSpecialCharacterRule extends PasswordRule {
 
-    private final String allowedSpecialCharacters = ".*#@$%&";
+    private final String allowedSpecialCharacters;
+
+    public ContainsAtLeastOneAllowedSpecialCharacterRule(String allowedSpecialCharacters) {
+        this.allowedSpecialCharacters = allowedSpecialCharacters;
+    }
 
     @Override
     boolean validate(String password) {

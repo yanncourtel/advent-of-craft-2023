@@ -4,12 +4,14 @@ import java.util.List;
 
 public class ValidationPassword {
 
+    private final String allowedSpecialCharacters = ".*#@$%&";
+
     private final List<PasswordRule> rules = List.of(
             new MinimumSizeRule(),
             new ContainsAtLeastOneUpperCaseRule(),
             new ContainsAtLeastOneLowerCaseRule(),
             new ContainsAtLeastANumberRule(),
-            new ContainsAtLeastOneAllowedSpecialCharacterRule()
+            new ContainsAtLeastOneAllowedSpecialCharacterRule(allowedSpecialCharacters)
     );
 
     public boolean validate(String passwordString) {
@@ -18,7 +20,7 @@ public class ValidationPassword {
     }
 
     private boolean doesNotContainAnyForbiddenCharacterRegex(String passwordString) {
-        String pattern = "^[a-zA-Z0-9.*#@$%&]+$";
+        String pattern = "^[a-zA-Z0-9." + allowedSpecialCharacters + "]+$";
         return passwordString.matches(pattern);
     }
 }
