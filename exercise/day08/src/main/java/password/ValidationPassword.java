@@ -1,13 +1,18 @@
 package password;
 
+import java.util.List;
 import java.util.function.IntPredicate;
 
 public class ValidationPassword {
     public static final int MINIMUM_PASSWORD_SIZE = 8;
     private final String allowedSpecialCharacters = ".*#@$%&";
 
+    private final List<PasswordRule> rules = List.of(
+            new MinimumSizeRule()
+    );
+
     public boolean validate(String passwordString) {
-        return hasMinimumSize(passwordString)
+        return rules.stream().allMatch(r -> r.validate(passwordString))
                 && containsUpperCase(passwordString)
                 && containsLowerCase(passwordString)
                 && containsNumber(passwordString)
