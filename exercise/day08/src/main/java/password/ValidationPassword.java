@@ -11,7 +11,12 @@ public class ValidationPassword {
                 && containsUpperCase(passwordString)
                 && containsLowerCase(passwordString)
                 && containsNumber(passwordString)
-                && containsAllowedSpecialCharacter(passwordString);
+                && containsAllowedSpecialCharacter(passwordString)
+                && doesNotContainAnyForbiddenCharacter(passwordString);
+    }
+
+    private boolean doesNotContainAnyForbiddenCharacter(String passwordString) {
+        return !contains(passwordString, i -> i == '!');
     }
 
     private static boolean hasMinimumSize(String passwordString) {
