@@ -12,7 +12,7 @@ public class PasswordValidationTests {
     /*
 -- Contains at least 8 characters
 -- Contains at least one capital letter
-- Contains at least one lowercase letter
+-- Contains at least one lowercase letter
 - Contains at least a number
 - Contains at least a special character in this list `. * # @ $ % &`.
 - Any other characters are not authorized.
@@ -20,9 +20,10 @@ public class PasswordValidationTests {
 
     public static Stream<Arguments> invalidPassword() {
         return Stream.of(
-            Arguments.of("Passw", "Contains at least 8 characters"),
+            Arguments.of("Pass", "Contains at least 8 characters"),
             Arguments.of("passwordddd", "Contains at least one capital letter"),
-            Arguments.of("P23456789", "Contains at least one lowercase letter")
+            Arguments.of("PPPPPPPPPPPP", "Contains at least one lowercase letter"),
+            Arguments.of("Passworddd", "Contains at least a number")
         );
     }
 
