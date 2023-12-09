@@ -25,4 +25,9 @@ public class ValidationPasswordBuilder {
     public ValidationPassword build() {
         return new ValidationPassword(rules);
     }
+
+    public ValidationPasswordBuilder withCustomRule(PasswordRule rule) {
+        rules.add(rule);
+        return this;
+    }
 }
