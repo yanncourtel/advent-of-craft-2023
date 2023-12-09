@@ -35,7 +35,7 @@ public class PasswordValidationTests {
     private static ValidationPassword createPasswordValidation() {
         var allowedSpecialCharacters = ".*#@$%&";
         return new ValidationPassword()
-                .addValidationRule(new MinimumSizeRule())
+                .addValidationRule(new MinimumSizeRule(8))
                 .addValidationRule(new ContainsAtLeastOneUpperCaseRule())
                 .addValidationRule(new ContainsAtLeastOneLowerCaseRule())
                 .addValidationRule(new ContainsAtLeastANumberRule())
