@@ -13,25 +13,19 @@ public class Project {
         return new ProjectBuilder();
     }
 
-    public boolean hasTests() {
-        return testStatus != TestStatus.NO_TESTS;
+    public boolean hasNoTests() {
+        return testStatus == TestStatus.NO_TESTS;
     }
 
     public TaskResult runTests() {
-        var testPassed = testStatus == TestStatus.PASSING_TESTS;
-        return new TaskResult(
-                testStatus == TestStatus.NO_TESTS || testPassed,
-                testStatus == TestStatus.NO_TESTS
-                        ? "No tests"
-                        : testPassed
-                            ? "Tests passed" : "Tests failed"
-                );
+        return new TestTaskResult(
+                () -> testStatus == TestStatus.PASSING_TESTS || hasNoTests(),
+                hasNoTests());
     }
 
     public TaskResult deploy() {
-        return new TaskResult(
-                buildsSuccessfully,
-                buildsSuccessfully ? "Deployment successful" : "Deployment failed");
+        return new DeployTaskResult(
+                () -> buildsSuccessfully);
     }
 
     public static class ProjectBuilder {

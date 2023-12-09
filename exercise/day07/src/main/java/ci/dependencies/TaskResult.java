@@ -2,24 +2,38 @@ package ci.dependencies;
 
 import ci.EmailSender;
 
-public record TaskResult(boolean success, String status) {
+import java.util.function.Supplier;
+
+public abstract class TaskResult {
+
+    protected final boolean success;
+
+    public abstract String getStatusMessage();
+
+    public TaskResult(Supplier<Boolean> success){
+        this.success = success.get();
+    }
 
     public boolean isUnsuccessful() {
         return !success;
     }
 
+    public boolean isSuccessful() {
+        return success;
+    }
+
     public TaskResult logStatusWith(Logger log) {
         if (success)
-            log.info(status);
+            log.info(getStatusMessage());
         else
-            log.error(status);
+            log.error(getStatusMessage());
 
         return this;
     }
 
     public TaskResult reportByEmail(EmailSender emailSender) {
         if (!success)
-            emailSender.send(status);
+            emailSender.send(getStatusMessage());
 
         return this;
     }

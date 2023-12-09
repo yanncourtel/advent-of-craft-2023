@@ -1,34 +1,28 @@
 package ci;
 
 import ci.dependencies.Logger;
-import ci.dependencies.Project;
+import ci.dependencies.TaskResult;
+
+import java.util.stream.Stream;
 
 public class Pipeline {
     private final EmailSender emailSender;
     private final Logger log;
+    private final Stream<TaskResult> pipelineTasks;
 
-    public Pipeline(EmailSender emailSender, Logger log) {
+    public Pipeline(EmailSender emailSender, Logger log, Stream<TaskResult> pipelineTasks) {
         this.emailSender = emailSender;
         this.log = log;
+        this.pipelineTasks = pipelineTasks;
     }
 
-    public void run(Project project) {
-        if (runningTestHasFailed(project) || deployHasFailed(project)) {
-            return;
-        }
-
-        emailSender.send("Deployment completed successfully");
+    public void run() {
+        if (pipelineTasks.noneMatch(this::taskHasFailed))
+            emailSender.send("Deployment completed successfully");
     }
 
-    private boolean deployHasFailed(Project project) {
-        return project.deploy()
-                .logStatusWith(log)
-                .reportByEmail(emailSender)
-                .isUnsuccessful();
-    }
-
-    private boolean runningTestHasFailed(Project project) {
-        return project.runTests()
+    private boolean taskHasFailed(TaskResult task) {
+        return task
                 .logStatusWith(log)
                 .reportByEmail(emailSender)
                 .isUnsuccessful();

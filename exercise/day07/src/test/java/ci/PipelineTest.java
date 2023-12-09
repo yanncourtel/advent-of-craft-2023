@@ -3,10 +3,10 @@ package ci;
 import ci.dependencies.Config;
 import ci.dependencies.Emailer;
 import ci.dependencies.Project;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import static ci.dependencies.TestStatus.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,11 +18,11 @@ class PipelineTest {
     private final Emailer emailer = mock(Emailer.class);
     private final EmailSender emailSender = new EmailSender(log, config, emailer);
 
-    private Pipeline pipeline;
-
-    @BeforeEach
-    void setUp() {
-        pipeline = new Pipeline(emailSender, log);
+    private Pipeline buildPipelineUnderTest(Project project){
+        return new Pipeline(
+                emailSender,
+                log,
+                Stream.of(project.runTests(), project.deploy()));
     }
 
     @Test
@@ -30,11 +30,13 @@ class PipelineTest {
         when(config.sendEmailSummary()).thenReturn(true);
 
         var project = Project.builder()
-                .setTestStatus(PASSING_TESTS)
-                .setDeploysSuccessfully(true)
-                .build();
+                    .setTestStatus(PASSING_TESTS)
+                    .setDeploysSuccessfully(true)
+                    .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: Tests passed",
@@ -54,7 +56,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(true)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: Tests passed",
@@ -74,7 +78,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(true)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: No tests",
@@ -94,7 +100,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(true)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: No tests",
@@ -113,7 +121,9 @@ class PipelineTest {
                 .setTestStatus(FAILING_TESTS)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "ERROR: Tests failed",
@@ -131,7 +141,9 @@ class PipelineTest {
                 .setTestStatus(FAILING_TESTS)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "ERROR: Tests failed",
@@ -150,7 +162,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(false)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: Tests passed",
@@ -170,7 +184,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(false)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: Tests passed",
@@ -190,7 +206,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(false)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: No tests",
@@ -210,7 +228,9 @@ class PipelineTest {
                 .setDeploysSuccessfully(false)
                 .build();
 
-        pipeline.run(project);
+        var pipeline = buildPipelineUnderTest(project);
+
+        pipeline.run();
 
         assertEquals(Arrays.asList(
                 "INFO: No tests",
