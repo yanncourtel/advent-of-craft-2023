@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import password.ValidationPassword;
+import password.*;
 
 import java.util.stream.Stream;
 
@@ -33,6 +33,13 @@ public class PasswordValidationTests {
     }
 
     private static ValidationPassword createPasswordValidation() {
-        return new ValidationPassword(".*#@$%&");
+        var allowedSpecialCharacters = ".*#@$%&";
+        return new ValidationPassword()
+                .addValidationRule(new MinimumSizeRule())
+                .addValidationRule(new ContainsAtLeastOneUpperCaseRule())
+                .addValidationRule(new ContainsAtLeastOneLowerCaseRule())
+                .addValidationRule(new ContainsAtLeastANumberRule())
+                .addValidationRule(new ContainsAtLeastOneAllowedSpecialCharacterRule(allowedSpecialCharacters))
+                .addValidationRule(new DoesNotHaveAnyForbiddenCharactersRule(allowedSpecialCharacters));
     }
 }
