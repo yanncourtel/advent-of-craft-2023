@@ -11,16 +11,11 @@ public class ValidationPassword {
             new ContainsAtLeastOneUpperCaseRule(),
             new ContainsAtLeastOneLowerCaseRule(),
             new ContainsAtLeastANumberRule(),
-            new ContainsAtLeastOneAllowedSpecialCharacterRule(allowedSpecialCharacters)
+            new ContainsAtLeastOneAllowedSpecialCharacterRule(allowedSpecialCharacters),
+            new DoesNotHaveAnyForbiddenCharactersRule(allowedSpecialCharacters)
     );
 
     public boolean validate(String passwordString) {
-        return rules.stream().allMatch(r -> r.validate(passwordString))
-                && doesNotContainAnyForbiddenCharacterRegex(passwordString);
-    }
-
-    private boolean doesNotContainAnyForbiddenCharacterRegex(String passwordString) {
-        String pattern = "^[a-zA-Z0-9." + allowedSpecialCharacters + "]+$";
-        return passwordString.matches(pattern);
+        return rules.stream().allMatch(r -> r.validate(passwordString));
     }
 }
