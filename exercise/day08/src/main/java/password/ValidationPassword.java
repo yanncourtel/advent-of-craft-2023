@@ -3,15 +3,20 @@ package password;
 import java.util.function.IntPredicate;
 
 public class ValidationPassword {
+    public static final int MINIMUM_PASSWORD_SIZE = 8;
+    private final char[] allowedSpecialCharacters = {'.', '*', '#', '@', '$', '%', '&'};
+
     public boolean validate(String passwordString) {
-        return passwordString.length() >= 8
+        return hasMinimumSize(passwordString)
                 && containsUpperCase(passwordString)
                 && containsLowerCase(passwordString)
                 && containsNumber(passwordString)
                 && containsAllowedSpecialCharacter(passwordString);
     }
 
-    char[] allowedSpecialCharacters = {'.', '*', '#', '@', '$', '%', '&'};
+    private static boolean hasMinimumSize(String passwordString) {
+        return passwordString.length() >= MINIMUM_PASSWORD_SIZE;
+    }
 
     private boolean containsAllowedSpecialCharacter(String value) {
         return contains(value, i -> (new String(allowedSpecialCharacters)).indexOf(i) != -1);

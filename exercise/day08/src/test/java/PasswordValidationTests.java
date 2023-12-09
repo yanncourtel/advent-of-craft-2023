@@ -14,11 +14,11 @@ public class PasswordValidationTests {
 -- Contains at least one capital letter
 -- Contains at least one lowercase letter
 -- Contains at least a number
-- Contains at least a special character in this list `. * # @ $ % &`.
+-- Contains at least a special character in this list `. * # @ $ % &`.
 - Any other characters are not authorized.
     */
 
-    public static Stream<Arguments> invalidPassword() {
+    public static Stream<Arguments> invalidPasswords() {
         return Stream.of(
             Arguments.of("Pass", "Contains at least 8 characters"),
             Arguments.of("passwordddd", "Contains at least one capital letter"),
@@ -36,7 +36,7 @@ public class PasswordValidationTests {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidPassword")
+    @MethodSource("invalidPasswords")
     void passwordIsInvalid(String invalidPassword) {
         var validationPassword = new ValidationPassword();
 
