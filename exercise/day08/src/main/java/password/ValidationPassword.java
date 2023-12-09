@@ -9,13 +9,15 @@ public class ValidationPassword {
 
     private final List<PasswordRule> rules = List.of(
             new MinimumSizeRule(),
-            new ContainsAtLeastOneUpperCaseRule()
+            new ContainsAtLeastOneUpperCaseRule(),
+            new ContainsAtLeastOneLowerCaseRule()
+
     );
 
     public boolean validate(String passwordString) {
         return rules.stream().allMatch(r -> r.validate(passwordString))
                 //&& containsUpperCase(passwordString)
-                && containsLowerCase(passwordString)
+                //&& containsLowerCase(passwordString)
                 && containsNumber(passwordString)
                 && containsAllowedSpecialCharacter(passwordString)
                 && doesNotContainAnyForbiddenCharacter(passwordString);
