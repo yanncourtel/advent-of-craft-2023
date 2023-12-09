@@ -33,6 +33,6 @@ public class PasswordValidationTests {
     }
 
     private static ValidationPassword createPasswordValidation() {
-        return new ValidationPassword();
+        return new ValidationPassword(".*#@$%&");
     }
 }
