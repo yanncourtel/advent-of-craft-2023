@@ -13,10 +13,4 @@ public class ValidationPassword {
         return rules.stream()
                 .allMatch(r -> r.validate(passwordString));
     }
-
-    public ValidationPassword addValidationRule(PasswordRule rule) {
-        rules.add(rule);
-
-        return this;
-    }
 }
