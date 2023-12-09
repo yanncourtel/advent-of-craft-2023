@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.Test;
 import password.ValidationPassword;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PasswordValidationTests {
     /*
@@ -19,5 +18,12 @@ public class PasswordValidationTests {
         var validationPassword = new ValidationPassword();
 
         assertTrue(validationPassword.validate("P@ssw0rd!"));
+    }
+
+    @Test
+    void passwordIsInvalidWithLessThan8Characters() {
+        var validationPassword = new ValidationPassword();
+
+        assertFalse(validationPassword.validate("P@ssw"));
     }
 }
