@@ -7,7 +7,14 @@ public class ValidationPassword {
         return passwordString.length() >= 8
                 && containsUpperCase(passwordString)
                 && containsLowerCase(passwordString)
-                && containsNumber(passwordString);
+                && containsNumber(passwordString)
+                && containsAllowedSpecialCharacter(passwordString);
+    }
+
+    char[] allowedSpecialCharacters = {'.', '*', '#', '@', '$', '%', '&'};
+
+    private boolean containsAllowedSpecialCharacter(String value) {
+        return contains(value, i -> (new String(allowedSpecialCharacters)).indexOf(i) != -1);
     }
 
     private boolean containsLowerCase(String value) {
