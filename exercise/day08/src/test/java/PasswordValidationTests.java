@@ -26,4 +26,11 @@ public class PasswordValidationTests {
 
         assertFalse(validationPassword.validate("P@ssw"));
     }
+
+    @Test
+    void passwordIsInvalidIfNotAtLeastOneUpperCharacter() {
+        var validationPassword = new ValidationPassword();
+
+        assertFalse(validationPassword.validate("passwordddd"));
+    }
 }
