@@ -13,7 +13,7 @@ public class PasswordValidationTests {
 -- Contains at least 8 characters
 -- Contains at least one capital letter
 -- Contains at least one lowercase letter
-- Contains at least a number
+-- Contains at least a number
 - Contains at least a special character in this list `. * # @ $ % &`.
 - Any other characters are not authorized.
     */
@@ -23,7 +23,8 @@ public class PasswordValidationTests {
             Arguments.of("Pass", "Contains at least 8 characters"),
             Arguments.of("passwordddd", "Contains at least one capital letter"),
             Arguments.of("PPPPPPPPPPPP", "Contains at least one lowercase letter"),
-            Arguments.of("Passworddd", "Contains at least a number")
+            Arguments.of("Passworddd", "Contains at least a number"),
+            Arguments.of("Pass12rddd", "Contains at least a special character in this list `. * # @ $ % &`")
         );
     }
 
