@@ -9,14 +9,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PasswordValidationTests {
-    /*
--- Contains at least 8 characters
--- Contains at least one capital letter
--- Contains at least one lowercase letter
--- Contains at least a number
--- Contains at least a special character in this list `. * # @ $ % &`.
-- Any other characters are not authorized.
-    */
 
     public static Stream<Arguments> invalidPasswords() {
         return Stream.of(
