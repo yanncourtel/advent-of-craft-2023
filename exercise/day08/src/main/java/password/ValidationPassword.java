@@ -10,7 +10,8 @@ public class ValidationPassword {
     private final List<PasswordRule> rules = List.of(
             new MinimumSizeRule(),
             new ContainsAtLeastOneUpperCaseRule(),
-            new ContainsAtLeastOneLowerCaseRule()
+            new ContainsAtLeastOneLowerCaseRule(),
+            new ContainsAtLeastANumber()
 
     );
 
@@ -18,7 +19,7 @@ public class ValidationPassword {
         return rules.stream().allMatch(r -> r.validate(passwordString))
                 //&& containsUpperCase(passwordString)
                 //&& containsLowerCase(passwordString)
-                && containsNumber(passwordString)
+                //&& containsNumber(passwordString)
                 && containsAllowedSpecialCharacter(passwordString)
                 && doesNotContainAnyForbiddenCharacter(passwordString);
     }
