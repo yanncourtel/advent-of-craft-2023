@@ -8,12 +8,13 @@ public class ValidationPassword {
     private final String allowedSpecialCharacters = ".*#@$%&";
 
     private final List<PasswordRule> rules = List.of(
-            new MinimumSizeRule()
+            new MinimumSizeRule(),
+            new ContainsAtLeastOneUpperCaseRule()
     );
 
     public boolean validate(String passwordString) {
         return rules.stream().allMatch(r -> r.validate(passwordString))
-                && containsUpperCase(passwordString)
+                //&& containsUpperCase(passwordString)
                 && containsLowerCase(passwordString)
                 && containsNumber(passwordString)
                 && containsAllowedSpecialCharacter(passwordString)

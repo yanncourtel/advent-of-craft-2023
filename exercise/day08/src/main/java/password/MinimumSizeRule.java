@@ -1,6 +1,6 @@
 package password;
 
-public class MinimumSizeRule implements PasswordRule {
+public class MinimumSizeRule extends PasswordRule {
     private static final int MINIMUM_PASSWORD_SIZE = 8;
 
     @Override
