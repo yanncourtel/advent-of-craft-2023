@@ -1,6 +1,6 @@
 package password;
 
-public class ContainsAtLeastANumber extends PasswordRule {
+public class ContainsAtLeastANumberRule extends PasswordRule {
     @Override
     boolean validate(String password) {
         return containsNumber(password);

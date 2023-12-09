@@ -11,7 +11,8 @@ public class ValidationPassword {
             new MinimumSizeRule(),
             new ContainsAtLeastOneUpperCaseRule(),
             new ContainsAtLeastOneLowerCaseRule(),
-            new ContainsAtLeastANumber()
+            new ContainsAtLeastANumberRule(),
+            new ContainsAtLeastOneAllowedSpecialCharacterRule()
 
     );
 
@@ -20,7 +21,7 @@ public class ValidationPassword {
                 //&& containsUpperCase(passwordString)
                 //&& containsLowerCase(passwordString)
                 //&& containsNumber(passwordString)
-                && containsAllowedSpecialCharacter(passwordString)
+                //&& containsAllowedSpecialCharacter(passwordString)
                 && doesNotContainAnyForbiddenCharacter(passwordString);
     }
 
