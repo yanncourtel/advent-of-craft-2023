@@ -6,7 +6,9 @@ import password.*;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static password.ValidationPasswordBuilder.aValidationPassword;
 
 public class PasswordValidationTests {
     @Test
@@ -33,13 +35,8 @@ public class PasswordValidationTests {
     }
 
     private static ValidationPassword createPasswordValidation() {
-        var allowedSpecialCharacters = ".*#@$%&";
-        return new ValidationPassword()
-                .addValidationRule(new MinimumSizeRule(8))
-                .addValidationRule(new ContainsAtLeastOneUpperCaseRule())
-                .addValidationRule(new ContainsAtLeastOneLowerCaseRule())
-                .addValidationRule(new ContainsAtLeastANumberRule())
-                .addValidationRule(new ContainsAtLeastOneAllowedSpecialCharacterRule(allowedSpecialCharacters))
-                .addValidationRule(new DoesNotHaveAnyForbiddenCharactersRule(allowedSpecialCharacters));
+        return aValidationPassword()
+                .withStandardRules()
+                .build();
     }
 }
