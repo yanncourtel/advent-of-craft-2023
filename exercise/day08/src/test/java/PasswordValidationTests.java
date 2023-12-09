@@ -20,8 +20,9 @@ public class PasswordValidationTests {
 
     public static Stream<Arguments> invalidPassword() {
         return Stream.of(
-                Arguments.of("P@ssw", "Contains at least 8 characters"),
-                Arguments.of("passwordddd", "Contains at least one capital letter")
+            Arguments.of("Passw", "Contains at least 8 characters"),
+            Arguments.of("passwordddd", "Contains at least one capital letter"),
+            Arguments.of("P23456789", "Contains at least one lowercase letter")
         );
     }
 
