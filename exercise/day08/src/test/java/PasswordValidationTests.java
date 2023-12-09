@@ -51,13 +51,15 @@ public class PasswordValidationTests {
         void passwordIsInvalid (String invalidPassword){
             assertFalse(aValidationPassword()
                     .withCustomRule(new MinimumSizeRule(15))
+                    .withCustomRule(new ContainsAtLeastANumberRule())
                     .build()
                     .validate(invalidPassword));
         }
 
         public static Stream<Arguments> invalidPasswords () {
             return Stream.of(
-                    Arguments.of("Passddddddddd", "Contains at least 15 characters")
+                    Arguments.of("Passddddddddd", "Contains at least 15 characters"),
+                    Arguments.of("Passsssssssssssss1", "Contains at least 2 digits")
             );
         }
     }
