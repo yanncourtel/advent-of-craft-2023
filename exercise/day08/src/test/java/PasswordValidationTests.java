@@ -25,7 +25,8 @@ public class PasswordValidationTests {
             Arguments.of("PPPPPPPPPPPP", "Contains at least one lowercase letter"),
             Arguments.of("Passworddd", "Contains at least a number"),
             Arguments.of("Pass12rddd", "Contains at least a special character in this list `. * # @ $ % &`"),
-            Arguments.of("P@ss12rddd!", "Any other characters are not authorized.")
+            Arguments.of("P@ss12rddd!", "Any other characters are not authorized."),
+            Arguments.of("P@ss12rddd````", "Any other characters are not authorized.")
         );
     }
 
