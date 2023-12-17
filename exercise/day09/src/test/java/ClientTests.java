@@ -30,8 +30,6 @@ class ClientTests {
 
         @Test
         void client_statement_printer_should_print_statement () {
-            String statement = client.toStatement();
-
             ClientStatementPrinter printer = new ClientStatementPrinter(client);
 
             assertThat(printer.print()).isEqualTo(
