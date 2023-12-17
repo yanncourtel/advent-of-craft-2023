@@ -26,4 +26,9 @@ class ClientTests {
                         "Interstellar for 23.98€" + lineSeparator() +
                         "Total : 130.97€");
     }
+
+    @Test
+    public void client_should_get_total_amount(){
+        assertThat(client.getTotalAmount()).isEqualTo(130.97);
+    }
 }
