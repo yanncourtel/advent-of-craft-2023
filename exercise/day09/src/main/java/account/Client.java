@@ -1,5 +1,6 @@
 package account;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -32,6 +33,10 @@ public class Client {
 
     private String formatTotal() {
         return System.lineSeparator() + "Total : " + getTotalAmount() + "€";
+    }
+
+    public Map<String, Double> getAllLines() {
+        return orderLines;
     }
 }
 
