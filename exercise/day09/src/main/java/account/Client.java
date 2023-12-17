@@ -1,6 +1,7 @@
 package account;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class Client {
@@ -24,7 +25,10 @@ public class Client {
     }
 
     public double getTotalAmount() {
-        return totalAmount;
+        return orderLines.values()
+                .stream()
+                .mapToDouble(x -> x)
+                .sum();
     }
 }
 
