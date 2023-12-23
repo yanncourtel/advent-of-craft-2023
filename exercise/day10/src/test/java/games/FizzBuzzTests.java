@@ -45,7 +45,7 @@ class FizzBuzzTests {
     @ParameterizedTest
     @MethodSource("invalidInputs")
     void throws_an_exception_for_numbers_out_of_range(int input) {
-        assertThatThrownBy(() -> FizzBuzz.convert(input))
+        assertThatThrownBy(() -> new FizzBuzzNumber(input))
                 .isInstanceOf(OutOfRangeException.class);
     }
 }
